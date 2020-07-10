@@ -1,0 +1,56 @@
+<html>
+    <head>
+        <style>
+            body { background-color: white; overflow-y: scroll}
+            #counter { font-family: consolas, monospace; text-align: center; margin: 0px; }
+            #counter p {
+                display: inline-block;
+                margin: 0px;
+                background-color: black;
+                color: #00FF00;
+                font-size: 28pt;
+                margin-right: 1px;
+                padding: 6px;
+            }
+            #followers {
+                margin: 0px;
+                background-image: repeating-linear-gradient(45deg, violet, indigo, blue, green, yellow, orange, red, violet);
+                text-align: center;
+                background-size: 800% 800%;
+                -webkit-background-clip: text;
+                -webkit-text-fill-color: transparent;
+                font-size: 12pt;
+                font-family: 'Times New Roman', Times, serif;
+                animation: rainbow 2s infinite;
+            }
+
+            @keyframes rainbow { 
+                0%{background-position:0% 50%}
+                50%{background-position:100% 25%}
+                100%{background-position:0% 50%}
+            }
+        </style>
+    </head>
+    <body>
+        <p id="counter"></p>
+        <p id="followers">followers on GitHub!</p>
+
+        <script type="text/javascript">
+            (function() {
+                var counterVal = 9999999;
+                var counter = document.getElementById('counter');
+                counter.innerHTML = `${counterVal}`.padStart(7, "0").split('').map(x => `<div>${x}</div>`).join('');
+                var request = new XMLHttpRequest();
+                request.open('GET', 'https://api.github.com/users/ryanlanciaux');
+                request.onload = () => {
+                    if (request.status === 200) {
+                        var userInfo = JSON.parse(request.response);
+                        counterVal = userInfo.followers;
+                    }
+                    counter.innerHTML = `${counterVal}`.padStart(7, "0").split('').map(x => `<p>${x}</p>`).join('');
+                }
+                request.send();
+            })();
+        </script>
+    </body>
+</html>
