@@ -39,7 +39,7 @@
             (function() {
                 var counterVal = 9999999;
                 var counter = document.getElementById('counter');
-                counter.innerHTML = `${counterVal}`.padStart(7, "0").split('').map(x => `<div>${x}</div>`).join('');
+                counter.innerHTML = `${counterVal}`.padStart(7, "0").split('').map(x => `<p>${x}</p>`).join('');
                 var request = new XMLHttpRequest();
                 request.open('GET', 'https://api.github.com/users/ryanlanciaux');
                 request.onload = () => {
